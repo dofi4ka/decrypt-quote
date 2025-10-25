@@ -1,47 +1,26 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import { ref } from "vue";
+import { getRandomQuote, type QuoteData } from "./lib/quotes";
+import Quote from "./components/Quote.vue";
+
+const quote = ref<QuoteData>(getRandomQuote());
+
+const nextQuote = () => {
+  if (
+    confirm(
+      "Are you sure you want to replace the current quote with a new one?"
+    )
+  ) {
+    quote.value = getRandomQuote();
+  }
+};
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
   <main>
-    <TheWelcome />
+    <h1 class="text-3xl font-bold text-center mt-16 mb-8 font-mono">
+      {{ "Decrypt the quote" }}
+    </h1>
+    <Quote :key="quote.id" :quote="quote" :nextQuote="nextQuote" />
   </main>
 </template>
-
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
