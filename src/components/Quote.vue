@@ -8,6 +8,7 @@ import {
   substituteChars,
 } from "@/lib/substitutions";
 import { clamp } from "@/lib/utils.ts";
+import QuoteUsedLetters from "@/components/QuoteUsedLetters.vue";
 
 const props = defineProps<{
   quote: QuoteData;
@@ -115,6 +116,19 @@ onMounted(() => {
         Next Quote
       </button>
       <p class="italic text-right text-lg">{{ quote.author }}</p>
+    </div>
+  </div>
+  <div class="container mx-auto px-16 mt-16">
+    <h2 class="text-xl font-bold mb-4">Used letters:</h2>
+    <div class="w-96">
+      <QuoteUsedLetters
+        :usedLetters="
+          [...userSubstitutions.substitutionMap.values()].filter(
+            (v) => typeof v === 'string'
+          )
+        "
+        :alphabet="englishLetters"
+      />
     </div>
   </div>
 </template>
