@@ -18,9 +18,12 @@ The application presents you with an encrypted quote where:
   - `Home` / `↑` - Jump to the first letter
   - `End` / `↓` - Jump to the last letter
 - **Visual Feedback**: 
-  - Same letters are highlighted in cyan
-  - Focused input field is highlighted in purple
-  - Conflicting substitutions are highlighted in red
+  - Selected letters are highlighted in cyan for easy tracking
+  - Focused input fields have purple borders and background
+  - Conflicting substitutions (same letter used twice) are highlighted in red/orange
+  - Successfully solved quotes turn all letters green
+- **Used Letters Tracker**: Visual indicator showing which letters you've already used and which are still available
+- **Real-time Validation**: Automatic detection when you've successfully decrypted the entire quote
 - **Real-time Updates**: All input fields update automatically when you make substitutions
 
 ## Technical Details
@@ -127,18 +130,24 @@ You can modify these constants in `parse_quotes.py`:
 
 ## How to Play
 
-1. Start the application and you'll see an encrypted quote
-2. Click on any letter input field to begin decrypting
-3. Type the letter you think it should be
-4. Use arrow keys to navigate between letters
-5. Continue until you've decrypted the entire quote
-6. Click "Get Next Quote" to try a new challenge
+1. **Start**: Launch the application and you'll see an encrypted quote with substituted letters
+2. **Select**: Click on any letter input field to begin decrypting
+3. **Type**: Enter the letter you think it should be
+4. **Navigate**: Use arrow keys to move between letters quickly
+5. **Track Progress**: 
+   - Watch the "Used Letters" section to see which letters are still available
+   - Red/orange highlights warn you about conflicting substitutions
+6. **Solve**: Continue until all letters turn green - you've successfully decrypted the quote!
+7. **Next Challenge**: Click "Get Next Quote" to try a new puzzle (you'll be asked to confirm)
 
 ## Tips for Decryption
 
-- Look for common letter patterns (like "the", "and", "or")
-- Pay attention to single-letter words (usually "a" or "i")
-- Consider the frequency of letters in English
-- Use context clues from the quote's meaning
+- **Start with patterns**: Look for common letter patterns (like "the", "and", "or")
+- **Single letters**: Pay attention to single-letter words (usually "a" or "i")
+- **Letter frequency**: Consider the frequency of letters in English (e, t, a, o, i, n are most common)
+- **Use the tracker**: Check the "Used Letters" section to see which letters are still available
+- **Watch for conflicts**: Red/orange highlights indicate you've used the same letter twice - fix these first
+- **Context clues**: Use the quote's meaning and grammar to guide your substitutions
+- **Systematic approach**: Try to solve common words first, then use those letters to solve other words
 
 Enjoy decrypting and improving your cipher-solving skills while discovering inspiring quotes and wisdom from various authors!
