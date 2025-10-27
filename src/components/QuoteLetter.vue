@@ -17,6 +17,7 @@ const props = defineProps<{
   setCursor: (index: number) => void;
   substitutedChars: Map<string, string>;
   userSubstitutions: UserSubstitutions;
+  isSolved: boolean;
 }>();
 
 const isSelected = () => props.selectedLetter === props.letter.toLowerCase();
@@ -131,6 +132,7 @@ const dublicate = computed(
         'border-gray-300': !isSelected() && inputValue() !== '',
         'bg-red-200 border-red-500': dublicate && !isSelected(),
         'bg-orange-200 border-orange-500': dublicate && isSelected(),
+        'bg-green-200 border-green-500': isSolved,
       }"
       :value="inputValue()"
       @focus="handleFocus"

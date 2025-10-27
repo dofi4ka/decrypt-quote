@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { type QuoteData } from "@/lib/quotes";
-import { computed, onMounted, ref, useTemplateRef, reactive } from "vue";
+import { computed, onMounted, ref, useTemplateRef, reactive, watch } from "vue";
 import QuoteLetter from "@/components/QuoteLetter.vue";
 import {
   englishLetters,
@@ -14,6 +14,10 @@ const props = defineProps<{
   quote: QuoteData;
   nextQuote: () => void;
 }>();
+
+const uniqueQuoteChars = computed(() => {
+  return new Set(props.quote.text.toLowerCase());
+});
 
 const quoteParsed = computed<string[][]>(() => {
   return props.quote.text.split(" ").map((word) => word.split(""));
@@ -63,15 +67,39 @@ const setCursor = (index: number) => {
   }
 };
 
-const { substitutedChars, inverseSubstitutedChars } = substituteChars();
-const userSubstitutions = reactive(newUserSubstitutions());
-
 onMounted(() => {
   let i = 0;
   for (const letterRef of lettersRefs.value ?? []) {
     letterMap.set(letterRef?.index ?? "", i++);
   }
 });
+
+const { substitutedChars, inverseSubstitutedChars } = substituteChars();
+const userSubstitutions = reactive(newUserSubstitutions());
+const isSolved = ref(false);
+
+watch(
+  () => userSubstitutions.substitutionMap,
+  () => {
+    // Пересчитываем solved при изменениях
+    checkSolved();
+  },
+  { deep: true }
+);
+
+const checkSolved = (): boolean => {
+  for (const [substitutedChar, originalChar] of inverseSubstitutedChars) {
+    if (uniqueQuoteChars.value.has(originalChar)) {
+      if (
+        userSubstitutions.substitutionMap.get(substitutedChar) !== originalChar
+      ) {
+        return (isSolved.value = false);
+      }
+    }
+  }
+
+  return (isSolved.value = true);
+};
 </script>
 
 <template>
@@ -98,6 +126,7 @@ onMounted(() => {
             :setCursor="setCursor"
             :substitutedChars="substitutedChars"
             :userSubstitutions="userSubstitutions"
+            :isSolved="isSolved"
           />
           <div
             v-else
@@ -115,6 +144,7 @@ onMounted(() => {
       >
         Next Quote
       </button>
+      {{ isSolved }}
       <p class="italic text-right text-lg">{{ quote.author }}</p>
     </div>
   </div>
