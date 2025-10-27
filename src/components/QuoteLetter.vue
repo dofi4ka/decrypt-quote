@@ -127,7 +127,8 @@ const dublicate = computed(
       class="text-center caret-transparent border-b-2 focus:outline-none focus:border-purple-600 focus:bg-purple-300"
       :class="{
         'bg-cyan-200 border-cyan-500': isSelected(),
-        'border-gray-300 bg-gray-50': !isSelected(),
+        'border-gray-300 bg-gray-100': !isSelected() && inputValue() === '',
+        'border-gray-300': !isSelected() && inputValue() !== '',
         'bg-red-200 border-red-500': dublicate && !isSelected(),
         'bg-orange-200 border-orange-500': dublicate && isSelected(),
       }"
