@@ -144,7 +144,6 @@ const checkSolved = (): boolean => {
       >
         Next Quote
       </button>
-      {{ isSolved }}
       <p class="italic text-right text-lg">{{ quote.author }}</p>
     </div>
   </div>
